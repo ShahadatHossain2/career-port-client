@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from "react";
 import AuthHook from "../../hooks/AuthHook";
-import axios from "axios";
+import { myApplicationPromise } from "../api/ApplicationApi";
 
 const ViewAppliedJob = () => {
   const { user } = AuthHook();
   const [application, setApplication] = useState([]);
 
   useEffect(() => {
-    if (!user.email) return;
-    fetch(`http://localhost:5000/application/${user.email}`)
-      .then((res) => res.json())
-      .then((data) => setApplication(data));
+    if (!user?.email) return;
+    myApplicationPromise(user.email).then((data) => {
+      setApplication(data); // ✅ full array here
+    });
   }, [user]);
 
-  const [appliedJob, setAppliedJob] = useState([]);
-  useEffect(() => {
-    if (!application?.length) return;
+  //   const [appliedJob, setAppliedJob] = useState([]);
+  //   useEffect(() => {
+  //     if (!application?.length) return;
 
-    Promise.all(
-      application.map((job) =>
-        fetch(`http://localhost:5000/job/${job.jobId}`).then((res) =>
-          res.json()
-        )
-      )
-    ).then((data) => {
-      setAppliedJob(data); // ✅ all jobs at once
-    });
-  }, [application]);
+  //     Promise.all(
+  //       application.map((job) =>
+  //         fetch(`http://localhost:5000/job/${job.jobId}`).then((res) =>
+  //           res.json()
+  //         )
+  //       )
+  //     ).then((data) => {
+  //       setAppliedJob(data); // ✅ all jobs at once
+  //     });
+  //   }, [application]);
 
-  console.log(appliedJob);
+  //   console.log(appliedJob);
 
   return (
     <div>
@@ -44,7 +44,7 @@ const ViewAppliedJob = () => {
               <th>Action</th>
             </tr>
           </thead>
-          {appliedJob.map((job) => (
+          {application.map((job) => (
             <tbody>
               {/* row 1 */}
               <tr>

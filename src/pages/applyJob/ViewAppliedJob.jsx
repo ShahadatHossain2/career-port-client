@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import AuthHook from "../../hooks/AuthHook";
 import { myApplicationPromise } from "../api/ApplicationApi";
+import { MdDeleteForever } from "react-icons/md";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const ViewAppliedJob = () => {
   const { user } = AuthHook();
@@ -9,9 +12,41 @@ const ViewAppliedJob = () => {
   useEffect(() => {
     if (!user?.email) return;
     myApplicationPromise(user.email).then((data) => {
-      setApplication(data); // ✅ full array here
+      setApplication(data);
     });
   }, [user]);
+
+  const handleDeleteApplication = (applicationId) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:5000/application/${applicationId}`)
+          .then((res) => {
+            if (res.data.deletedCount) {
+              Swal.fire({
+                title: "Deleted!",
+                text: "Your Application has been Canceled.",
+                icon: "success",
+              });
+              setApplication((prev) =>
+                prev.filter((app) => app._id !== applicationId)
+              );
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    });
+  };
 
   //   const [appliedJob, setAppliedJob] = useState([]);
   //   useEffect(() => {
@@ -24,7 +59,7 @@ const ViewAppliedJob = () => {
   //         )
   //       )
   //     ).then((data) => {
-  //       setAppliedJob(data); // ✅ all jobs at once
+  //       setAppliedJob(data); //
   //     });
   //   }, [application]);
 
@@ -40,7 +75,6 @@ const ViewAppliedJob = () => {
               <th>Company Name</th>
               <th>Job Title</th>
               <th>Deadline</th>
-              <th>Update</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -66,11 +100,14 @@ const ViewAppliedJob = () => {
                   <br />
                 </td>
                 <td>{job.deadline}</td>
+
                 <td>
-                  <button className="btn btn-ghost btn-xs">details</button>
-                </td>
-                <td>
-                  <button>Action</button>
+                  <button
+                    onClick={() => handleDeleteApplication(job._id)}
+                    className="btn btn-xs ml-2"
+                  >
+                    <MdDeleteForever fill="red" size="20px"></MdDeleteForever>
+                  </button>
                 </td>
               </tr>
             </tbody>

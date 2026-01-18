@@ -46,7 +46,13 @@ const JobDetails = () => {
               <p>Vacancy: {vacancy}</p>
             </div>
             <div>
-              <p>{responsibility}</p>
+              <div className="md:flex grid grid-cols-2">
+                {responsibility.map((sk, index) => (
+                  <p className="m-1 p-1" key={index}>
+                    {sk}
+                  </p>
+                ))}
+              </div>
               <div className="md:flex grid grid-cols-2">
                 {skill.map((sk, index) => (
                   <p

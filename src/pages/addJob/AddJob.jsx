@@ -3,16 +3,24 @@ import React, { useEffect, useRef, useState } from "react";
 import addJobBg from "../../assets/AddJob.png";
 import axios from "axios";
 import Swal from "sweetalert2";
+import AuthHook from "../../hooks/AuthHook";
 
 const AddJob = () => {
   const [count, setCount] = useState(1);
+  const { user } = AuthHook();
   const handleJobPost = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const newJobPost = Object.fromEntries(formData.entries());
+    const { responsibility, ...newJobPost } = Object.fromEntries(
+      formData.entries()
+    );
     const skills = formData.getAll("skill");
+    const responsibilities = responsibility
+      .split(",")
+      .map((item) => item.trim());
     const postJob = {
       ...newJobPost,
+      responsibility: responsibilities,
       skill: skills,
     };
 
@@ -64,6 +72,7 @@ const AddJob = () => {
                 placeholder="Company Name"
                 name="name"
               />
+
               <label className="label text-xl text-white">Position</label>
               <input
                 type="text"
@@ -149,6 +158,14 @@ const AddJob = () => {
                 defaultValue="Pick a date"
                 ref={myDatepicker}
               />
+              <label className="label text-xl text-white">HR Email</label>
+              <input
+                type="text"
+                className="input w-full"
+                name="hrEmail"
+                defaultValue={user.email}
+              />
+
               <input
                 className="w-1/2 mx-auto bg-gradient-to-r from-blue-200 to-violet-600 cursor-pointer my-3 rounded py-2 text-xl font-bold text-white"
                 type="submit"

@@ -1,10 +1,11 @@
 import axios from "axios";
 import React from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData, useRevalidator } from "react-router";
 import Swal from "sweetalert2";
 
 const ViewApplications = () => {
   const applications = useLoaderData();
+  const revalidator = useRevalidator();
   applications.map((app) => console.log(app._id));
   const handleStatusChange = (e, applicationId) => {
     console.log(e.target.value, applicationId);
@@ -21,6 +22,7 @@ const ViewApplications = () => {
             showConfirmButton: false,
             timer: 1500,
           });
+          revalidator.revalidate();
         }
       })
       .catch((err) => {

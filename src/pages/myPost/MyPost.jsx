@@ -9,8 +9,11 @@ const MyPost = () => {
 
   useEffect(() => {
     if (!user.email) return;
-    myJobPostPromise(user.email).then((data) => setMyJobPost(data));
+    myJobPostPromise(user.email, user.accessToken).then((data) => {
+      setMyJobPost(data);
+    });
   }, [user]);
+  console.log(myJobPost);
 
   return (
     <div>
@@ -20,14 +23,14 @@ const MyPost = () => {
             {/* head */}
             <thead>
               <tr>
-                <th>Company Name</th>
+                <th>Company</th>
                 <th>Job Title</th>
                 <th>Deadline</th>
                 <th>View Applications</th>
               </tr>
             </thead>
             {myJobPost.map((job) => (
-              <tbody>
+              <tbody key={job._id}>
                 {/* row 1 */}
                 <tr>
                   <td>

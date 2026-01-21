@@ -1,7 +1,15 @@
 export const myApplicationPromise = email => {
-    return fetch(`http://localhost:5000/application?email=${email}`).then(res=>res.json());
+    return fetch(`http://localhost:5000/application?email=${email}`, {
+        credentials: 'include'
+    }).then(res=>res.json());
 }
 
-export const myJobPostPromise = email => {
-    return fetch(`http://localhost:5000/job?email=${email}`).then(res=>res.json());
+export const myJobPostPromise = (email, 
+accessToken) => {
+    return fetch(`http://localhost:5000/job?email=${email}`, {
+        credentials: 'include',
+        headers: {
+            authorization: `Bearer ${accessToken}`
+        }
+    }).then(res=>res.json());
 }

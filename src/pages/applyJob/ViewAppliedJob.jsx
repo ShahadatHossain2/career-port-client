@@ -37,7 +37,7 @@ const ViewAppliedJob = () => {
                 icon: "success",
               });
               setApplication((prev) =>
-                prev.filter((app) => app._id !== applicationId)
+                prev.filter((app) => app._id !== applicationId),
               );
             }
           })

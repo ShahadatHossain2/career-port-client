@@ -1,18 +1,23 @@
 import axios from "axios";
 import React from "react";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
+import { useNavigate } from "react-router";
 import { useLoaderData, useRevalidator } from "react-router";
 import Swal from "sweetalert2";
 
 const ViewApplications = () => {
   const applications = useLoaderData();
   const revalidator = useRevalidator();
+  const navigation = useNavigate();
   applications.map((app) => console.log(app._id));
   const handleStatusChange = (e, applicationId) => {
-    console.log(e.target.value, applicationId);
     axios
-      .patch(`http://localhost:5000/application/${applicationId}`, {
-        status: e.target.value,
-      })
+      .patch(
+        `https://career-port-server.onrender.com/application/${applicationId}`,
+        {
+          status: e.target.value,
+        },
+      )
       .then((res) => {
         if (res.data.modifiedCount) {
           Swal.fire({
@@ -45,7 +50,13 @@ const ViewApplications = () => {
 
   return (
     <div>
-      <p>Applications: {applications.length}</p>
+      <div
+        onClick={() => navigation(-1)}
+        className="ml-4 flex gap-1 items-center w-20"
+      >
+        <FaArrowAltCircleLeft></FaArrowAltCircleLeft>
+        <p className="font-bold">Back</p>
+      </div>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
@@ -91,7 +102,7 @@ const ViewApplications = () => {
                     onChange={(e) => handleStatusChange(e, application._id)}
                     defaultValue={application.status || "status"}
                     className={`select w-1/2 ${getStatusClass(
-                      application.status
+                      application.status,
                     )}`}
                   >
                     <option value="status" disabled={true}>

@@ -42,11 +42,11 @@ const Banner = () => {
             excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
             a id nisi.
           </p>
-          <div>
+          <div className="mt-5">
             <Link to="/addJob" className="btn btn-primary mr-2">
               Post a Job
             </Link>
-            <Link to="/jobPost" className="btn btn-primary">
+            <Link to="/jobPost" className="btn btn-secondary hover:size-18">
               My Posts
             </Link>
           </div>

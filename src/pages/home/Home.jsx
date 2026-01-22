@@ -3,6 +3,7 @@ import Banner from "./Banner";
 import { useLoaderData } from "react-router";
 import JobCards from "./JobCards";
 import { MdViewList } from "react-icons/md";
+import Trends from "./Trends";
 
 const Home = () => {
   const allJob = useLoaderData();
@@ -28,6 +29,12 @@ const Home = () => {
           {showAll ? "Show Less" : "Show All"}
         </button>
       </div>
+      {/* <section className="grid grid-cols-4">
+        <div className="col-span-1">
+          <Trends></Trends>
+        </div>
+        <div className="col-span-3"></div>
+      </section> */}
     </div>
   );
 };

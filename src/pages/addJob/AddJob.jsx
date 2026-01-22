@@ -12,7 +12,7 @@ const AddJob = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const { responsibility, ...newJobPost } = Object.fromEntries(
-      formData.entries()
+      formData.entries(),
     );
     const skills = formData.getAll("skill");
     const responsibilities = responsibility
@@ -25,7 +25,7 @@ const AddJob = () => {
     };
 
     axios
-      .post("http://localhost:5000/job", postJob)
+      .post("https://career-port-server.onrender.com/job", postJob)
       .then((data) => {
         if (data.data.insertedId) {
           Swal.fire({

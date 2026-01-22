@@ -13,7 +13,7 @@ const Register = () => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const { email, password, ...restInfo } = Object.fromEntries(
-      formData.entries()
+      formData.entries(),
     );
     createUser(email, password)
       .then((result) => {
@@ -22,15 +22,17 @@ const Register = () => {
             email,
             ...restInfo,
           };
-          axios.post("http://localhost:5000/users", newUser).then((res) => {
-            if (res.data.insertedId) {
-              Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: "Please Check your Email for Verification!",
-              });
-            }
-          });
+          axios
+            .post("https://career-port-server.onrender.com/users", newUser)
+            .then((res) => {
+              if (res.data.insertedId) {
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Please Check your Email for Verification!",
+                });
+              }
+            });
         });
       })
       .catch((error) => {

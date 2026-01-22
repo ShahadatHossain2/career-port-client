@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import AuthHook from "../../hooks/AuthHook";
-import { myJobPostPromise } from "../api/ApplicationApi";
+import { myJobPostFullPromise } from "../api/ApplicationApi";
 import { Link } from "react-router";
+import { FaEdit, FaEye } from "react-icons/fa";
+import { motion } from "motion/react";
 
 const MyPost = () => {
   const { user } = AuthHook();
@@ -9,11 +11,11 @@ const MyPost = () => {
 
   useEffect(() => {
     if (!user.email) return;
-    myJobPostPromise(user.email, user.accessToken).then((data) => {
+    myJobPostFullPromise(user.email, user.accessToken).then((data) => {
       setMyJobPost(data);
     });
+    // myJobPostFullPromise(user.email).then((data) => console.log(data));
   }, [user]);
-  console.log(myJobPost);
 
   return (
     <div>
@@ -26,7 +28,8 @@ const MyPost = () => {
                 <th>Company</th>
                 <th>Job Title</th>
                 <th>Deadline</th>
-                <th>View Applications</th>
+                <th>Application</th>
+                <th>Action</th>
               </tr>
             </thead>
             {myJobPost.map((job) => (
@@ -51,9 +54,14 @@ const MyPost = () => {
                     <br />
                   </td>
                   <td>{job.deadline}</td>
-
-                  <td>
-                    <Link to={`/application/job/${job._id}`}>View</Link>
+                  <td>{job.application_count}</td>
+                  <td className="flex gap-2">
+                    <Link to={`/application/job/${job._id}`}>
+                      <FaEye className="hover:text-yellow-400 hover:size-5"></FaEye>
+                    </Link>
+                    <Link>
+                      <FaEdit className="hover:text-blue-400 hover:size-5"></FaEdit>
+                    </Link>
                   </td>
                 </tr>
               </tbody>

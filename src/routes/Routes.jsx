@@ -19,7 +19,9 @@ export const router = createBrowserRouter([
       {
         index: true,
         loader: () =>
-          fetch("http://localhost:5000/job").then((res) => res.json()),
+          fetch("https://career-port-server.onrender.com/job").then((res) =>
+            res.json(),
+          ),
         Component: Home,
       },
       {
@@ -41,9 +43,9 @@ export const router = createBrowserRouter([
       {
         path: "JobDetails/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/job/${params.id}`).then((res) =>
-            res.json()
-          ),
+          fetch(
+            `https://career-port-server.onrender.com/job/${params.id}`,
+          ).then((res) => res.json()),
         element: (
           <PrivateRoute>
             <JobDetails></JobDetails>
@@ -53,9 +55,9 @@ export const router = createBrowserRouter([
       {
         path: "applyJob/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/job/${params.id}`).then((res) =>
-            res.json()
-          ),
+          fetch(
+            `https://career-port-server.onrender.com/job/${params.id}`,
+          ).then((res) => res.json()),
         element: (
           <PrivateRoute>
             <ApplyJob></ApplyJob>
@@ -81,7 +83,9 @@ export const router = createBrowserRouter([
       {
         path: "application/job/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/application/job/${params.id}`),
+          fetch(
+            `https://career-port-server.onrender.com/application/job/${params.id}`,
+          ),
         element: (
           <PrivateRoute>
             <ViewApplications></ViewApplications>

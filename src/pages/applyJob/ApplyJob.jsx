@@ -3,6 +3,8 @@ import { useParams } from "react-router";
 import AuthHook from "../../hooks/AuthHook";
 import axios from "axios";
 import Swal from "sweetalert2";
+import applyAnimation from "../../assets/user-interface.json";
+import Lottie from "lottie-react";
 
 const ApplyJob = () => {
   const { id: jobId } = useParams();
@@ -21,7 +23,7 @@ const ApplyJob = () => {
       resume,
     };
     axios
-      .post("https://career-port-server.onrender.com/application", application)
+      .post("http://localhost:5000/application", application)
       .then((data) => {
         if (data.data.insertedId) {
           Swal.fire({
@@ -43,7 +45,7 @@ const ApplyJob = () => {
   };
 
   return (
-    <div className="my-10 mx-2">
+    <div className="my-10 w-10/11 mx-auto flex justify-around">
       <form onSubmit={handleJobApplication}>
         <fieldset className="fieldset bg-base-200 border-base-300 rounded-box w-xs border p-4">
           <label className="label">LinkedIn Link</label>
@@ -56,6 +58,7 @@ const ApplyJob = () => {
 
           <label className="label">Github Link</label>
           <input
+            required
             type="url"
             name="github"
             className="input"
@@ -64,6 +67,7 @@ const ApplyJob = () => {
 
           <label className="label">Resume Link</label>
           <input
+            required
             type="url"
             name="resume"
             className="input"
@@ -71,12 +75,20 @@ const ApplyJob = () => {
           />
 
           <input
+            required
             className="btn btn-success font-bold text-white"
             type="submit"
             value="Apply"
           />
         </fieldset>
       </form>
+      <div>
+        <Lottie
+          loop
+          animationData={applyAnimation}
+          style={{ width: 300 }}
+        ></Lottie>
+      </div>
     </div>
   );
 };

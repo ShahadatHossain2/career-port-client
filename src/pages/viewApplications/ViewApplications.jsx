@@ -12,12 +12,9 @@ const ViewApplications = () => {
   applications.map((app) => console.log(app._id));
   const handleStatusChange = (e, applicationId) => {
     axios
-      .patch(
-        `https://career-port-server.onrender.com/application/${applicationId}`,
-        {
-          status: e.target.value,
-        },
-      )
+      .patch(`http://localhost:5000/application/${applicationId}`, {
+        status: e.target.value,
+      })
       .then((res) => {
         if (res.data.modifiedCount) {
           Swal.fire({

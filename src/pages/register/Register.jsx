@@ -22,17 +22,15 @@ const Register = () => {
             email,
             ...restInfo,
           };
-          axios
-            .post("https://career-port-server.onrender.com/users", newUser)
-            .then((res) => {
-              if (res.data.insertedId) {
-                Swal.fire({
-                  position: "top-end",
-                  icon: "success",
-                  title: "Please Check your Email for Verification!",
-                });
-              }
-            });
+          axios.post("http://localhost:5000/users", newUser).then((res) => {
+            if (res.data.insertedId) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Please Check your Email for Verification!",
+              });
+            }
+          });
         });
       })
       .catch((error) => {

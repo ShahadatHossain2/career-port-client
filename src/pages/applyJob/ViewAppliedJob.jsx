@@ -12,6 +12,7 @@ const ViewAppliedJob = () => {
   useEffect(() => {
     if (!user?.email) return;
     myApplicationPromise(user.email).then((data) => {
+      console.log(data);
       setApplication(data);
     });
   }, [user]);

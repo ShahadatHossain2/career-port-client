@@ -46,7 +46,7 @@ const Banner = () => {
             <Link to="/addJob" className="btn btn-primary mr-2">
               Post a Job
             </Link>
-            <Link to="/jobPost" className="btn btn-secondary hover:size-18">
+            <Link to="/jobPost" className="btn btn-secondary">
               My Posts
             </Link>
           </div>

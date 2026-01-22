@@ -25,7 +25,7 @@ const AddJob = () => {
     };
 
     axios
-      .post("https://career-port-server.onrender.com/job", postJob)
+      .post("http://localhost:5000/job", postJob)
       .then((data) => {
         if (data.data.insertedId) {
           Swal.fire({
